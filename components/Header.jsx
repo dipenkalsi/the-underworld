@@ -50,7 +50,7 @@ const Header = () => {
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 '>Categories</p>
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 '>Latest releases</p>
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Best deals</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Artist's Pick</p>
+        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Artist&apos;s Pick</p>
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Chains</p>
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Economic</p>
         <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Popular</p>
