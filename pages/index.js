@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import {RiMoneyDollarCircleFill} from "react-icons/ri"
@@ -21,8 +22,8 @@ export default function Home() {
       <main className='py-5 px-5'>
         {loadingListings?(
           <div>
-           <div class="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
-              <div class="border-t-transparent border-solid animate-spin  rounded-full border-purple-400 border-2 h-16 w-16"></div>
+           <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
+              <div className="border-t-transparent border-solid animate-spin  rounded-full border-purple-400 border-2 h-16 w-16"></div>
           </div>
           </div>
         ):(
@@ -30,6 +31,7 @@ export default function Home() {
             
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto'>
             {listings?.map(listing =>(
+              <Link href={`/Listing/${listing.id}`}> 
               <div key={listing.id} className="flex rounded-md flex-col card transition-all duration-100 ease-in">
                 
                 <div className='flex justify-center items-center flex-col hover:bg-[#1a0033] py-3 md:py-0 md:pb-3 px-3'>
@@ -54,6 +56,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </Link>
             ))}
           </div> 
           </div>

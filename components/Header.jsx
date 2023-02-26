@@ -30,7 +30,7 @@ const Header = () => {
             </button>
         </div>
         <div className='flex space-x-3 items-center justify-center text-purple-300  text-2xl'>
-            <Link href="/addItem">
+            <Link href="/AddItem">
             <MdOutlineInventory2 className='hover:text-green-500 transition-all ease-in duraiotn-100'/>
             </Link>
             <AiOutlineBell className='hover:text-green-500 transition-all ease-in duraiotn-100 cursor-pointer'/>
@@ -48,19 +48,19 @@ const Header = () => {
         </div>
       </nav>
       <section className='flex items-center justify-between text-gray-500 px-3 py-1 text-sm border-b border-gray-700 '>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 '>Categories</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 '>Latest releases</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Best deals</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Artist&apos;s Pick</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Chains</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Economic</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Popular</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Top-10 weekly</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Top-10 monthly</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Artists</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 '>News</p>
-        <p className='cursor-pointer hover:text-gray-400 transition-all ease-in duration-100 hover:underline underline-offset-2 hidden lg:block'>Region-wise</p>
-        <Link href='/createListing'>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>Categories</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>Latest releases</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Best deals</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Artist&apos;s Pick</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Chains</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Economic</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Popular</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Top-10 weekly</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Top-10 monthly</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Artists</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>News</p>
+        <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Region-wise</p>
+        <Link href='/CreateListing'>
         <button className='text-purple-300 border rounded-sm border-purple-300 text-base hover:bg-purple-300 hover:text-[#1a1a1a] font-semibold transition-all ease-in duration-100 px-8 py-1'>
             List Item
         </button>
