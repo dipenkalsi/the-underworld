@@ -94,7 +94,7 @@ const AddItem = () => {
         reverseOrder={true}
       />
         <h1 className='text-purple-300 text-3xl font-thin bg-gray-900 text-center w-full'>Add an item to the Marketplace</h1>
-        <p className='text-gray-500 mt-3 text-center '>By adding an item to the marketplace , you're essentially minting an NFT of the item into your wallet which can then be listed for sale.</p>
+        <p className='text-gray-500 mt-3 text-center '>By adding an item to the marketplace , you&apos;re essentially minting an NFT of the item into your wallet which can then be listed for sale.</p>
         <div className='my-5 flex flex-col md:flex-row md:space-x-10 items-center justify-center'>
           {preview?(
             <img src={preview} className="h-80 w-80 rounded-sm"/>
