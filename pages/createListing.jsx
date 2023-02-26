@@ -14,7 +14,7 @@ import { useAddress,
      } from '@thirdweb-dev/react'
      import { NATIVE_TOKENS , NATIVE_TOKEN_ADDRESS  } from '@thirdweb-dev/sdk'
 import { useRouter } from 'next/router'
-const createListing = () => {
+const CreateListing = () => {
     const address = useAddress();
     const router = useRouter()
     const { contract } =useContract(process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT , "marketplace");
@@ -206,4 +206,4 @@ const createListing = () => {
   )
 }
 
-export default createListing
+export default CreateListing

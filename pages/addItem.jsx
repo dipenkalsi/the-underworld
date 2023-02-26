@@ -5,7 +5,7 @@ import Header from '../components/Header'
 import { BsCameraFill } from "react-icons/bs"
 import { useAddress, useContract } from '@thirdweb-dev/react'
 import { useRouter } from 'next/router'
-const addItem = () => {
+const AddItem = () => {
   const { contract } = useContract(process.env.NEXT_PUBLIC_COLLECTION_CONTRACT , "nft-collection")
   const address = useAddress();
   const[isUploading, setIsuploading] = useState(false)
@@ -129,4 +129,4 @@ const addItem = () => {
   )
 }
 
-export default addItem
+export default AddItem
