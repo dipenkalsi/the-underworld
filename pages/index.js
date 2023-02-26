@@ -13,6 +13,9 @@ export default function Home() {
   console.log(listings)
   return (
     <div className='bg-[#1a1a1a] w-full h-full min-h-screen'>
+    <Head>
+      <title>Home - The underworld</title>
+    </Head>
       <Header/>
       <div className='text-purple-300 bg-gray-900 text-3xl font-thin  mt-5 text-center'>Recent Listings</div>
       <main className='py-5 px-5'>
@@ -36,7 +39,7 @@ export default function Home() {
                       <h2 className='text-purple-300 text-2xl'>{listing.asset.name}</h2>
                       
                     </div>
-                    <div className='text-gray-600 text-sm text-center mt-1'>
+                    <div className='text-gray-500 text-sm text-center mt-1'>
                       {listing.asset.description.slice(0,150)}...
                     </div>
                     <div className='flex px-2 w-full items-center justify-between'>
