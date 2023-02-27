@@ -11,6 +11,7 @@ import { BsTwitter } from "react-icons/bs";
 import { BsSuitHeart } from "react-icons/bs";
 import { CiShare1 } from "react-icons/ci";
 import {RiMoneyDollarCircleFill} from "react-icons/ri"
+import { ethers } from 'ethers';
 import {RiAuctionFill} from "react-icons/ri"
 import Header from '../../components/Header'
 import { MediaRenderer ,
@@ -42,7 +43,11 @@ const { data:listing , isLoading, error} = useListing(contract, ListingId);
 const [ ,switchNetwork ] = useNetwork();
 const networkMismatch = useNetworkMismatch();
 const { mutate:buyNow , isLoading:isBuyNowLoading } = useBuyNow(contract) 
-
+const { mutate:makeOffer , isLoading:makeOfferLoading } = useMakeOffer(contract)
+const { data:offers } =useOffers(contract,ListingId)
+const { mutate:makeBid , isLoading:makeBidLoading } = useMakeBid(contract)
+console.log(offers)
+console.log(bidAmount , listing)
 const buyNft = async()=>{
     if(networkMismatch){
         switchNetwork && switchNetwork(ChainId.Goerli);
@@ -109,12 +114,86 @@ const createBidOrOffer = async () =>{
 
         //Direct listing
         if(listing.type === ListingType.Direct){
-            
+            if(listing.buyoutPrice.toString() <= ethers.utils.parseEther(bidAmount).toString()){
+                buyNft();
+                return;
+            }
+            await makeOffer({
+                quantity:1,
+                listingId:ListingId,
+                pricePerToken: bidAmount,
+
+            },{
+                onSuccess(data,variables,context){
+                    setBidAmount(0)
+                    toast('Offer made Successfully!',
+                        {
+                        icon: '😄',
+                        style: {
+                            borderRadius: '3px',
+                            background: '#00b359',
+                            border:"1px solid #00b359",
+                            color: '#ffffff',
+                        },
+                        }
+                    );
+                },
+                onError(error, variables , context){
+                    toast('An error occured while making the offer!',
+                        {
+                        icon: '😵',
+                        style: {
+                            borderRadius: '3px',
+                            background: '#ff0000',
+                            border:"1px solid #ff0000",
+                            color: '#ffffff',
+                        },
+                        }
+                    );
+                    console.log("ERROR", error , variables , context);
+                }
+            })
         }
 
         //Auction listing
-        if(listing.type === ListingType.Direct){
-
+        if(listing.type === ListingType.Auction){
+            if(listing.buyoutPrice.toString() <= ethers.utils.parseEther(bidAmount).toString()){
+                buyNft();
+                return;
+            }
+            await makeBid({
+                listingId:ListingId,
+                bid:bidAmount,
+            },{
+                onSuccess(data,variables,context){
+                    setBidAmount(0)
+                    toast('Bid made Successfully!',
+                        {
+                        icon: '😄',
+                        style: {
+                            borderRadius: '3px',
+                            background: '#00b359',
+                            border:"1px solid #00b359",
+                            color: '#ffffff',
+                        },
+                        }
+                    );
+                },
+                onError(error, variables , context){
+                    toast('An error occured while making the bid!',
+                        {
+                        icon: '😵',
+                        style: {
+                            borderRadius: '3px',
+                            background: '#ff0000',
+                            border:"1px solid #ff0000",
+                            color: '#ffffff',
+                        },
+                        }
+                    );
+                    console.log("ERROR", error , variables , context);
+                }
+            })
         }
     }catch(err){
         console.log(err.message);
@@ -217,7 +296,7 @@ const handleLikeClick=()=>{
 
                         
                         <div className='text-purple-300 text-2xl w-full font-thin flex flex-col space-y-3 l justify-center items-center'>
-                            <p>{listing.type===0 ? "Make an offer":"Place a bid"}</p>
+                            <p>{listing.type===0?"Make an offer":"Place a bid"}</p>
                             <input type="number" step={0.0001} placeholder="Enter amount in ETH" className='bg-transparent text-base px-2 py-2 border border-gray-600 w-full focus:outline-none max-w-[200px]' onChange={(e)=>setBidAmount(e.target.value)}/>
                             {listing.type === ListingType.Auction &&
                             <p className='text-purple-500 text-base text-center'>
@@ -228,7 +307,8 @@ const handleLikeClick=()=>{
                         <div>
                             <button className='bg-purple-300  hover:bg-purple-400 transition-all duration-100 ease-in flex items-center justify-center space-x-2 px-5 py-2 rounded-sm  text-[#1a1a1a] font-semibold text-base' onClick={createBidOrOffer}>
                                 {listing.type===0?<RiMoneyDollarCircleFill/>:<RiAuctionFill/>}
-                                <p>{listing.type===0?"Make an offer":"Place a bid"}</p>
+                                <p>{listing.type===0 ? (makeOfferLoading || makeBidLoading )?"Processing...": "Make an offer":"Place a bid"}</p>
+                                
                             </button>
                         </div>
                     </div>
