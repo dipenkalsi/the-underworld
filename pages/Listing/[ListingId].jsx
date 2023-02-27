@@ -1,5 +1,6 @@
 import {React, useEffect, useState} from 'react'
 import Head from 'next/head';
+import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router'
 import { FaEthereum } from "react-icons/fa";
 import { BsSuitHeartFill } from "react-icons/bs";
@@ -12,22 +13,114 @@ import { CiShare1 } from "react-icons/ci";
 import {RiMoneyDollarCircleFill} from "react-icons/ri"
 import {RiAuctionFill} from "react-icons/ri"
 import Header from '../../components/Header'
-import { MediaRenderer ,useContract, useListing } from '@thirdweb-dev/react';
-import { ListingType } from '@thirdweb-dev/sdk';
+import { MediaRenderer ,
+    useContract,
+     useListing,
+     useNetwork,
+     useNetworkMismatch,
+     useMakeBid,
+     useOffers,
+     useMakeOffer,
+     useBuyNow,
+     useAddress
+     } from '@thirdweb-dev/react';
+import { ChainId, ListingType } from '@thirdweb-dev/sdk';
 import Countdown from 'react-countdown';
+import { set } from 'mongoose';
+
 const ListingPage = () => {
+
 const router = useRouter();
 const [liked, setLiked] = useState(false)
-const [minimumNextBid, setMinimumNextBid] = useState();
+const [minimumNextBid, setMinimumNextBid] = useState("");
+const [bidAmount, setBidAmount] = useState()
 let likes = 0;
 const { ListingId } = router.query;
 console.log(ListingId)
 const {contract} = useContract(process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT , "marketplace")
 const { data:listing , isLoading, error} = useListing(contract, ListingId);
-console.log(listing)
-const createBidOrOffer = async () =>{
+const [ ,switchNetwork ] = useNetwork();
+const networkMismatch = useNetworkMismatch();
+const { mutate:buyNow , isLoading:isBuyNowLoading } = useBuyNow(contract) 
+
+const buyNft = async()=>{
+    if(networkMismatch){
+        switchNetwork && switchNetwork(ChainId.Goerli);
+        return;
+    }
+
+    if(!ListingId || !contract || !listing){
+        toast('OOPS! Something went wrong.',
+            {
+            icon: '😵',
+            style: {
+                borderRadius: '3px',
+                background: '#ff0000',
+                border:"1px solid #ff0000",
+                color: '#ffffff',
+            },
+            }
+        );
+        return;
+    }
     
+    await buyNow({
+        id:ListingId,
+        buyAmount:1,
+        type:listing.type
+    },{
+        onSuccess(data, variables, context){
+            toast('Item bought Successfully!',
+                {
+                icon: '😄',
+                style: {
+                    borderRadius: '3px',
+                    background: '#00b359',
+                    border:"1px solid #00b359",
+                    color: '#ffffff',
+                },
+                }
+            );
+            router.replace('/')
+        },
+        onError(error, variables, context){
+            toast('An error occured while buying the item!',
+            {
+            icon: '😵',
+            style: {
+                borderRadius: '3px',
+                background: '#ff0000',
+                border:"1px solid #ff0000",
+                color: '#ffffff',
+            },
+            }
+             );
+             console.log("ERRORRRRR",error, variables,context)
+        }
+    })
 }
+
+const createBidOrOffer = async () =>{
+    try{
+        if(networkMismatch){
+            switchNetwork && switchNetwork(ChainId.Goerli);
+            return;
+        }
+
+        //Direct listing
+        if(listing.type === ListingType.Direct){
+            
+        }
+
+        //Auction listing
+        if(listing.type === ListingType.Direct){
+
+        }
+    }catch(err){
+        console.log(err.message);
+    }
+}
+
 useEffect(()=>{
     if(!ListingId || !contract){
         return;
@@ -72,6 +165,10 @@ const handleLikeClick=()=>{
   }
   return (
     <div className='w-full h-full min-h-screen bg-[#1a1a1a] '>
+    <Toaster
+        position="top-center"
+        reverseOrder={true}
+      />
       <Header/>
       <main>
         {isLoading ? (
@@ -112,16 +209,16 @@ const handleLikeClick=()=>{
                         </div>
                         
                         <div className='lg:pb-5 pb-3'>
-                            <button className='bg-purple-300 hover:bg-purple-400 transition-all duration-100 ease-in flex items-center justify-center space-x-2 px-5 py-2 rounded-sm  text-[#1a1a1a] font-semibold'>
+                            <button className='bg-purple-300 hover:bg-purple-400 transition-all duration-100 ease-in flex items-center justify-center space-x-2 px-5 py-2 rounded-sm  text-[#1a1a1a] font-semibold' onClick={buyNft}>
                                 <RiMoneyDollarCircleFill/>
-                                <p>Buy Now</p>
+                                <p>{isBuyNowLoading?"Buying...":"Buy Now"}</p>
                             </button>
                         </div>
 
                         
                         <div className='text-purple-300 text-2xl w-full font-thin flex flex-col space-y-3 l justify-center items-center'>
                             <p>{listing.type===0 ? "Make an offer":"Place a bid"}</p>
-                            <input type="number" step={0.0001} placeholder="Enter amount in ETH" className='bg-transparent text-base px-2 py-2 border border-gray-600 w-full focus:outline-none max-w-[200px]'/>
+                            <input type="number" step={0.0001} placeholder="Enter amount in ETH" className='bg-transparent text-base px-2 py-2 border border-gray-600 w-full focus:outline-none max-w-[200px]' onChange={(e)=>setBidAmount(e.target.value)}/>
                             {listing.type === ListingType.Auction &&
                             <p className='text-purple-500 text-base text-center'>
                                 NOTE: The bid price must be higher than the last bid.
@@ -168,7 +265,7 @@ const handleLikeClick=()=>{
                         </div>
                         <div className=' grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 items-center justify-center'>
                             {listing?.asset?.attributes?.length>0 && listing?.asset?.attributes?.map(attribute=>(
-                                <div className='flex flex-col items-center justify-center space-y-0 text-center px-5 rounded-sm py-2 border border-purple-300' >
+                                <div className='flex flex-col items-center justify-center space-y-0 text-center px-5 rounded-sm py-2 border border-purple-300' key={attribute.trait_type}>
                                     <p className='text-purple-500 font-semibold'>{attribute.trait_type}</p>
                                     <p className='text-purple-300 font-thin text-2xl'>{attribute.value}</p>
                                     <p className='text-purple-700'>{Math.floor(Math.random() * 90)+1}% have this trait.</p>

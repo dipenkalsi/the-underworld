@@ -31,8 +31,8 @@ export default function Home() {
             
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 mx-auto'>
             {listings?.map(listing =>(
-              <Link href={`/Listing/${listing.id}`}> 
-              <div key={listing.id} className="flex rounded-md flex-col card transition-all duration-100 ease-in">
+              <Link href={`/Listing/${listing.id}`} key={listing.id}> 
+              <div  className="flex rounded-md flex-col card transition-all duration-100 ease-in">
                 
                 <div className='flex justify-center items-center flex-col hover:bg-[#1a0033] py-3 md:py-0 md:pb-3 px-3'>
                   <MediaRenderer src={listing.asset.image} className="rounded-lg"/>
