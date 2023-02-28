@@ -2,6 +2,7 @@ import {React  , useState} from 'react'
 import Head from 'next/head'
 import { Toaster ,toast } from 'react-hot-toast'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import { useAddress,
      useContract,
      MediaRenderer,
@@ -201,6 +202,7 @@ const CreateListing = () => {
                 </form>
             )}
       </main>
+      <Footer/>
     </div>
     </>
   )

@@ -22,7 +22,7 @@ const Header = () => {
         </div>
         </div>
         <div className='border border-gray-600 hidden lg:flex w-[55%]'>
-            <input type="text" placeholder='Search for assets, artists, listings etc.'  className='w-full bg-transparent py-2 px-2 focus:outline-none focus:placeholder:text-transparent text-purple-300 placeholder:text-gray-500'/>
+            <input type="text" placeholder='Search for assets, artists, listings etc.'  className='w-full bg-transparent py-2 px-2 focus:outline-none focus:placeholder:text-transparent text-purple-300 placeholder:text-gray-600'/>
             <button className='px-5 bg-purple-300 hover:bg-purple-400 transition-all ease-in duration-100'>
                 <div className='text-[#1a1a1a] text-2xl'>
             <AiOutlineSearch/>
@@ -47,7 +47,7 @@ const Header = () => {
         </div>
         </div>
       </nav>
-      <section className='flex items-center justify-between text-gray-500 px-3 py-1 text-sm border-b border-gray-700 '>
+      <section className='flex items-center justify-between text-gray-400 px-3 py-1 text-sm border-b border-gray-700 '>
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>Categories</p>
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>Latest releases</p>
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Best deals</p>

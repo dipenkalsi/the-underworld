@@ -1,10 +1,11 @@
 import {React, useEffect, useState} from 'react'
-import Head from 'next/head';
 import { toast, Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router'
 import { FaEthereum } from "react-icons/fa";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { BsFillShareFill } from "react-icons/bs";
+import Footer from '../../components/Footer';
+import Head from 'next/head';
 import { FiMoreHorizontal } from "react-icons/fi";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { BsTwitter } from "react-icons/bs";
@@ -246,6 +247,9 @@ const handleLikeClick=()=>{
   }
   return (
     <div className='w-full h-full min-h-screen bg-[#1a1a1a] '>
+     <Head>
+        <title>Listing {ListingId} | The Underworld</title>
+    </Head>   
     <Toaster
         position="top-center"
         reverseOrder={true}
@@ -320,7 +324,7 @@ const handleLikeClick=()=>{
                             <div className='text-purple-300 text-4xl text-center font-normal lg:text-start mb-8 lg:block hidden '>
                                 {listing.asset.name}
                             </div> 
-                            <div className='text-purple-300 mb-8 hidden lg:flex items-center justify-center text-3xl space-x-3'>
+                            <div className='text-purple-300 mb-8 hidden lg:flex items-center justify-center text-2xl space-x-3'>
                                 <div className='cursor-pointer hover:bg-white/[0.1] p-3 rounded-full transition-all duration-100 ease-in'>
                                     <BsFillShareFill/>
                                 </div>
@@ -466,6 +470,7 @@ const handleLikeClick=()=>{
         
         )}
       </main>
+      {!isLoading && <Footer/>}
     </div>
   )
 }

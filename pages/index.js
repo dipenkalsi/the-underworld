@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Hero from '../components/Hero'
+import Footer from '../components/Footer'
 import {RiMoneyDollarCircleFill} from "react-icons/ri"
 import {RiAuctionFill} from "react-icons/ri"
 import { useActiveListings , useContract ,  MediaRenderer } from '@thirdweb-dev/react'
@@ -18,6 +20,7 @@ export default function Home() {
       <title>Home - The underworld</title>
     </Head>
       <Header/>
+      <Hero/>
       <div className='text-purple-300 bg-gray-900 text-3xl font-thin  mt-5 text-center'>Recent Listings</div>
       <main className='py-5 px-5'>
         {loadingListings?(
@@ -62,6 +65,7 @@ export default function Home() {
           </div>
         )}
       </main>
+        {!loadingListings && <Footer/>}
     </div>
   )
 }

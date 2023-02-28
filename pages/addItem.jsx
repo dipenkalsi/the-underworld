@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import { BsCameraFill } from "react-icons/bs"
 import { useAddress, useContract } from '@thirdweb-dev/react'
 import { useRouter } from 'next/router'
+import Footer from '../components/Footer'
 const AddItem = () => {
   const { contract } = useContract(process.env.NEXT_PUBLIC_COLLECTION_CONTRACT , "nft-collection")
   const address = useAddress();
@@ -125,6 +126,7 @@ const AddItem = () => {
           </form>
         </div>
       </main>
+      <Footer/>
     </div>
   )
 }
