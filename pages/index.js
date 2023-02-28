@@ -20,7 +20,7 @@ export default function Home() {
       <title>Home - The underworld</title>
     </Head>
       <Header/>
-      <Hero/>
+      {!loadingListings && <Hero/>}
       <div className='text-purple-300 bg-gray-900 text-3xl font-thin  mt-5 text-center'>Recent Listings</div>
       <main className='py-5 px-5'>
         {loadingListings?(
