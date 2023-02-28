@@ -30,7 +30,7 @@ const Header = () => {
             </button>
         </div>
         <div className='flex space-x-3 items-center justify-center text-purple-300  text-2xl'>
-            <Link href="/AddItem">
+            <Link href="/addItem">
             <MdOutlineInventory2 className='hover:text-green-500 transition-all ease-in duraiotn-100'/>
             </Link>
             <AiOutlineBell className='hover:text-green-500 transition-all ease-in duraiotn-100 cursor-pointer'/>
@@ -60,7 +60,7 @@ const Header = () => {
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Artists</p>
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 '>News</p>
         <p className='cursor-pointer transition-all ease-in duration-100 hover:text-purple-300 underline-offset-2 hidden lg:block'>Region-wise</p>
-        <Link href='/CreateListing'>
+        <Link href='/createListing'>
         <button className='text-purple-300 border rounded-sm border-purple-300 text-base hover:bg-purple-300 hover:text-[#1a1a1a] font-semibold transition-all ease-in duration-100 px-8 py-1'>
             List Item
         </button>

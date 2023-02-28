@@ -156,6 +156,7 @@ const CreateListing = () => {
       <main className='flex flex-col justify-center items-center py-5 px-5'>
         <h2 className='text-purple-300 font-thin text-3xl bg-gray-900'>List an Item</h2>
         <p className='text-gray-500 text-center mt-3 mb-5'>Below are the NFTs owned by your wallet address. Select an item to list in the marketplace.</p>
+        {!address && <p className='text-center text-gray-500 text-2xl font-thin'>Connect your wallet to list an item.</p>}
         {!ownedNFTs?(
             <div>
             <div className="absolute right-1/2 bottom-1/2  transform translate-x-1/2 translate-y-1/2 ">
