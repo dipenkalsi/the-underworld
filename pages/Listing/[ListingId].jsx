@@ -23,15 +23,16 @@ import { MediaRenderer ,
      useOffers,
      useMakeOffer,
      useBuyNow,
-     useAddress
+     useAddress,
+     useAcceptDirectListingOffer
      } from '@thirdweb-dev/react';
-import { ChainId, ListingType } from '@thirdweb-dev/sdk';
+import { ChainId, ListingType, NATIVE_TOKENS } from '@thirdweb-dev/sdk';
 import Countdown from 'react-countdown';
-import { set } from 'mongoose';
 
 const ListingPage = () => {
 
 const router = useRouter();
+const address = useAddress();
 const [liked, setLiked] = useState(false)
 const [minimumNextBid, setMinimumNextBid] = useState("");
 const [bidAmount, setBidAmount] = useState()
@@ -46,6 +47,7 @@ const { mutate:buyNow , isLoading:isBuyNowLoading } = useBuyNow(contract)
 const { mutate:makeOffer , isLoading:makeOfferLoading } = useMakeOffer(contract)
 const { data:offers } =useOffers(contract,ListingId)
 const { mutate:makeBid , isLoading:makeBidLoading } = useMakeBid(contract)
+const { mutate:acceptOffer , isLaoding:acceptOfferLoading } = useAcceptDirectListingOffer()
 console.log(offers)
 console.log(bidAmount , listing)
 const buyNft = async()=>{
@@ -401,10 +403,67 @@ const handleLikeClick=()=>{
                         </>
                         }
                     </div>
+                        {listing.type === ListingType.Direct && offers &&
+                        <div className='flex flex-col items-center justify-center lg:items-start'>
+                            <p className='text-purple-300 text-3xl font-thin'>Offers ({offers.length})</p>
+                            <div>
+                                {offers.map((offer)=>{
+                                    <div key={offer.listingId + offer.offerer + offer.totalOfferAmount.toString()} className="flex items-center justify-around lg:items-start lg:justify-center max-w-2xl mt-2">
+                                        <p className="text-lg text-purple-500">{offer.offerer.slice(0,5)}...{offer.offerer.slice(-5)}</p>
+                                        <div className="text-lg text-purple-500">{ethers.utils.formatEther(offer.totalOfferAmount)}{" "}{NATIVE_TOKENS[ChainId.Goerli].symbol}</div>
+                                        {listing.sellerAddress === address && 
+                                        <button onClick={()=> {
+                                            acceptOffer({
+                                                listingId:ListingId,
+                                                addressOfOfferor: offer.offeror
+                                            },{
+                                                onSuccess(data, variables, context){
+                                                    toast('Offer accepted Successfully!',
+                                                        {
+                                                        icon: '😄',
+                                                        style: {
+                                                            borderRadius: '3px',
+                                                            background: '#00b359',
+                                                            border:"1px solid #00b359",
+                                                            color: '#ffffff',
+                                                        },
+                                                        }
+                                                    );
+                                                    router.replace("/")    
+                                                },
+                                                onError(){
+                                                    toast('An error occured while accepting the offer!',
+                                                        {
+                                                        icon: '😵',
+                                                        style: {
+                                                            borderRadius: '3px',
+                                                            background: '#ff0000',
+                                                            border:"1px solid #ff0000",
+                                                            color: '#ffffff',
+                                                        },
+                                                        }
+                                                    );
+                                                }
+                                            })
+                                            }} className="bg-purple-300 hover:bg-purple-400 text-[#1a1a1a] transition-all duration-100 ease-in px-5 py-2 rounded-sm font-semibold">
+                                            Accept Offer
+                                        </button>
+                                        }
+                                    </div>
+                                })}
+                            </div>
+                        <div>
+                                {offers.length === 0 && <p className='text-lg text-gray-500 text-center lg:text-start mt-2'>
+                                    There are no offers made on this asset yet
+                                    </p>}
+                        </div>
+                        </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
+        
         )}
       </main>
     </div>
